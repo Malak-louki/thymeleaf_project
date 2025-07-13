@@ -1,0 +1,11 @@
+services:
+  mysql:
+    image: mysql:latest
+    container_name: thymeleaf_project
+    environment:
+      - MYSQL_DATABASE=thymeleaf_project
+      - MYSQL_USER=dev
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3306:3306
