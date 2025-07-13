@@ -12,6 +12,7 @@ public class Cart {
     private String id;
 
     @OneToOne
+    @JoinColumn(name = "user_id")  // clé étrangère dans la table Cart
     private User user;
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<CartItem>();
@@ -51,6 +52,12 @@ public class Cart {
 
     public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
+    }
+
+    public Double getTotalPrice(User user) {
+        return cartItems.stream()
+                .mapToDouble(cartItem -> cartItem.getProduct().getPrice() * cartItem.getQuantity())
+                .sum();
     }
 
 }

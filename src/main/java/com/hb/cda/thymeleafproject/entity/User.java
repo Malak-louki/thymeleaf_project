@@ -3,15 +3,10 @@ package com.hb.cda.thymeleafproject.entity;
 import java.util.Collection;
 import java.util.List;
 
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name="user_table")
@@ -22,19 +17,35 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String role;
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
+    public User() {
+    }
     public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;
+
     }
-    public User(String id, String username, String password, String role) {
+
+    public User(String id, String username, String password, String role, Cart cart) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
+        this.cart = cart;
     }
-    public User() {
+
+
+
+    public User(String username, String password, String role, Cart cart) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.cart = cart;
     }
+
     public String getId() {
         return id;
     }
@@ -59,7 +70,12 @@ public class User implements UserDetails {
     public void setRole(String role) {
         this.role = role;
     }
-
+    public Cart getCart() {
+        return cart;
+    }
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 
     @Override
     public int hashCode() {
