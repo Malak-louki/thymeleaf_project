@@ -2,7 +2,6 @@ package com.hb.cda.thymeleafproject.config;
 
 import com.hb.cda.thymeleafproject.entity.Product;
 import com.hb.cda.thymeleafproject.entity.User;
-import com.hb.cda.thymeleafproject.repository.CartRepository;
 import com.hb.cda.thymeleafproject.repository.ProductRepository;
 import com.hb.cda.thymeleafproject.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +15,7 @@ public class DataLoader implements CommandLineRunner {
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
 
-    public DataLoader(ProductRepository productRepo, CartRepository cartRepo, UserRepository userRepo, PasswordEncoder passwordEncoder) {
+    public DataLoader(ProductRepository productRepo, UserRepository userRepo, PasswordEncoder passwordEncoder) {
         this.productRepo = productRepo;
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;

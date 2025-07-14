@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Marketplace</title>
+</head>
+<body>
+<h1>Bienvenue [[${user.username}]] </h1>
+
+<h2>Liste de nos produits : </h2>
+<div th:if="${products.isEmpty()}">
+    <p>Aucun produits pour le moment</p>
+</div>
+<div th:else="${products.size() !=0}">
+    <table>
+        <tr>
+            <th>product name</th>
+            <th>price</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}  + '€' "></td>
+            <td>
+                <form th:action="@{'/cart/add/' + ${product.id}}" method="post"></form>
+                <button type="submit">Add to my cart</button>
+            </td>
+        </tr>
+    </table>
+</div>
+    <h3>
+        <a th:href="@{/cart}">clic here to see your cart</a>
+        </h3>
+</body>
+</html>
