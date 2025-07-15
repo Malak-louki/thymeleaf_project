@@ -2,6 +2,7 @@ package com.hb.cda.thymeleafproject.controller;
 
 import com.hb.cda.thymeleafproject.entity.Cart;
 import com.hb.cda.thymeleafproject.entity.CartItem;
+import com.hb.cda.thymeleafproject.entity.Product;
 import com.hb.cda.thymeleafproject.entity.User;
 import com.hb.cda.thymeleafproject.repository.CartItemRepository;
 import com.hb.cda.thymeleafproject.repository.CartRepository;
@@ -45,12 +46,26 @@ public class CartController {
         return "cart";
     }
 
-    @PostMapping ("/cart/add/{productId}")
-    public String addToCart(@PathVariable String productId, Model model, Principal principal) {
-        User user = userRepo.findByUsername(principal.getName()).orElseThrow();
+//    @PostMapping ("/cart/add/{productId}")
+//    public String addToCart(@PathVariable String productId, Model model, Principal principal) {
+//        User user = userRepo.findByUsername(principal.getName()).orElseThrow();
+//        cartService.addProductToCart(user, productId);
+//        return "redirect:/";
+//    }
+@PostMapping("/cart/add/{productId}")
+public String addToCart(@PathVariable String productId, Model model, Principal principal) {
+    User user = userRepo.findByUsername(principal.getName()).orElseThrow();
+    try {
         cartService.addProductToCart(user, productId);
-        return "redirect:/";
+    } catch (IllegalArgumentException e) {
+        model.addAttribute("errorMessage", e.getMessage());
+        model.addAttribute("products", productRepo.findAll());
+        model.addAttribute("user", user);
+        model.addAttribute("cart", cartService.getCart(user));
+        return "index"; // on retourne à l'index avec le message d'erreur
     }
+    return "redirect:/";
+}
     @PostMapping("/cart/clear")
     public String clearCart(Principal principal) {
         User user = userRepo.findByUsername(principal.getName()).orElseThrow();
@@ -72,4 +87,11 @@ public class CartController {
         model.addAttribute("products", productRepo.findAll());
         return "index";
     }
+    @PostMapping("/cart/checkout")
+    public String checkout(Principal principal) {
+        User user = userRepo.findByUsername(principal.getName()).orElseThrow();
+        cartService.checkout(user);
+        return "redirect:/cart";
+    }
+
 }

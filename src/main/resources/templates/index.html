@@ -13,6 +13,9 @@
 <div th:if="${products.isEmpty()}">
     <p>Aucun produits pour le moment</p>
 </div>
+<div th:if="${errorMessage}" style="color:red; font-weight:bold;">
+    <p th:text="${errorMessage}"></p>
+</div>
 <div th:else="${products.size() !=0}">
     <table>
         <tr>

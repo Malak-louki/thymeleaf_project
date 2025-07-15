@@ -38,12 +38,15 @@
     </table>
 
     <h3>Total : <span th:text="${total}">0.00</span> €</h3>
+    <div th:if="${errorMessage}" style="color:red; font-weight:bold;">
+        <p th:text="${errorMessage}"></p>
+    </div>
 
     <form th:action="@{/cart/clear}" method="post">
         <button type="submit">Vider le panier</button>
     </form>
 
-    <form th:action="@{/checkout}" method="post">
+    <form th:action="@{/cart/checkout}" method="post">
         <button type="submit">Passer commande</button>
     </form>
 </div>
