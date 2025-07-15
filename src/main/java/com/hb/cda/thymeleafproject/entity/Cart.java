@@ -25,7 +25,7 @@ public class Cart {
         this.user = user;
     }
 
-    public Cart(String id, Double totalPrice, User user) {
+    public Cart(String id, User user) {
         this.id = id;
         this.user = user;
     }
@@ -54,10 +54,5 @@ public class Cart {
         this.cartItems = cartItems;
     }
 
-    public Double getTotalPrice(User user) {
-        return cartItems.stream()
-                .mapToDouble(cartItem -> cartItem.getProduct().getPrice() * cartItem.getQuantity())
-                .sum();
-    }
 
 }

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
     <title>Marketplace</title>
 </head>
 <body>
@@ -22,14 +24,16 @@
             <td th:text="${product.name}"></td>
             <td th:text="${product.price}  + '€' "></td>
             <td>
-                <form th:action="@{'/cart/add/' + ${product.id}}" method="post"></form>
-                <button type="submit">Add to my cart</button>
+                <form th:action="@{'/cart/add/' + ${product.id}}" method="post">
+                    <button type="submit">Add to my cart</button>
+                </form>
+
             </td>
         </tr>
     </table>
 </div>
     <h3>
-        <a th:href="@{/cart}">clic here to see your cart</a>
+        <a th:href="@{/cart}">go to my cart</a>
         </h3>
 </body>
 </html>

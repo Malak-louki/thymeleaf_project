@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
     <title>Cart</title>
 </head>
 <body>
@@ -18,16 +20,14 @@
             <th>Produit</th>
             <th>Prix unitaire</th>
             <th>Quantité</th>
-            <th>Total</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item : ${cart.items}">
+        <tr th:each="item : ${items}">
             <td th:text="${item.product.name}">Nom du produit</td>
             <td th:text="${item.product.price}">0.00</td>
             <td th:text="${item.quantity}">1</td>
-<!--            <td th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 1, 'POINT', 2, 'ZERO')}">0.00</td>-->
             <td>
                 <form th:action="@{'/cart/remove/' + ${item.product.id}}" method="post">
                     <button type="submit">Retirer</button>
@@ -37,17 +37,17 @@
         </tbody>
     </table>
 
-<!--    <h3>Total : <span th:text="${total}">0.00</span> €</h3>-->
+    <h3>Total : <span th:text="${total}">0.00</span> €</h3>
 
-<!--    <form th:action="@{/cart/clear}" method="post">-->
-<!--        <button type="submit">Vider le panier</button>-->
-<!--    </form>-->
+    <form th:action="@{/cart/clear}" method="post">
+        <button type="submit">Vider le panier</button>
+    </form>
 
-<!--    <form th:action="@{/checkout}" method="post">-->
-<!--        <button type="submit">Passer commande</button>-->
-<!--    </form>-->
-<!--</div>-->
+    <form th:action="@{/checkout}" method="post">
+        <button type="submit">Passer commande</button>
+    </form>
+</div>
 
-<a href="/">Retour à la boutique</a>
+<a href="/">Back to the marketplace</a>
 </body>
 </html>

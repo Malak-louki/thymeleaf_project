@@ -41,7 +41,7 @@ public class CartController {
         model.addAttribute("cart", cart);
         model.addAttribute("user", user);
         model.addAttribute("items", cartItems );
-        model.addAttribute("total", cart.getTotalPrice(user));
+        model.addAttribute("total", cartService.getTotalPrice(user));
         return "cart";
     }
 
@@ -49,7 +49,7 @@ public class CartController {
     public String addToCart(@PathVariable String productId, Model model, Principal principal) {
         User user = userRepo.findByUsername(principal.getName()).orElseThrow();
         cartService.addProductToCart(user, productId);
-        return "redirect:/cart";
+        return "redirect:/";
     }
     @PostMapping("/cart/clear")
     public String clearCart(Principal principal) {
@@ -60,7 +60,7 @@ public class CartController {
     @PostMapping("/cart/remove/{productId}")
     public String removeFromCart(@PathVariable String productId, Principal principal) {
         User user = userRepo.findByUsername(principal.getName()).orElseThrow();
-        cartService.removeProductFtomCart(user, productId);
+        cartService.removeProductFromCart(user, productId);
         return "redirect:/cart";
     }
 

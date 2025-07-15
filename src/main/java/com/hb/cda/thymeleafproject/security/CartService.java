@@ -8,10 +8,13 @@ import com.hb.cda.thymeleafproject.repository.CartRepository;
 import com.hb.cda.thymeleafproject.repository.ProductRepository;
 import com.hb.cda.thymeleafproject.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@SessionScope
 public class CartService {
 private final CartRepository cartRepo;
 private final ProductRepository productRepo;
@@ -52,9 +55,9 @@ private final UserRepository userRepo;
 
         cartRepo.save(cart);
     }
-    public void removeProductFtomCart(User user, String productId) {
+    public void removeProductFromCart(User user, String productId) {
         Cart cart = getCart(user);
-        cart.getCartItems().removeIf(item -> item.getProduct().equals(productId));
+        cart.getCartItems().removeIf(item -> item.getProduct().getId().equals(productId));
         cartRepo.save(cart);
     }
 
@@ -64,5 +67,11 @@ private final UserRepository userRepo;
         cartRepo.save(cart);
     }
 
+    public Double getTotalPrice(User user) {
+        Cart cart = getCart(user);
 
+        return cart.getCartItems().stream()
+                .mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity())
+                .sum();
+    }
 }
